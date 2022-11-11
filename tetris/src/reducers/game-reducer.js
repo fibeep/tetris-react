@@ -85,7 +85,7 @@ case MOVE_DOWN:
     case GAME_OVER:
       return state;
     case RESTART:
-      return state;
+      return defaultState();
     default:
       return state;
   }
