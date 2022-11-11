@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 import {
   MOVE_RIGHT,
   MOVE_LEFT,
@@ -8,28 +9,22 @@ import {
   RESTART,
   GAME_OVER,
 } from "../actions";
-import { defaultState } from "../utils";
+
+import { defaultState, nextRotation, canMoveTo } from "../utils";
+
+
 const gameReducer = (state = defaultState(), action) => {
-  switch (action.type) {
+  
+  const { shape, grid, x, y, rotation, nextShape, score, isRunning } = state;
+
+  switch(action.type) {
     case ROTATE:
-      return state;
-    case MOVE_RIGHT:
-      return state;
-    case MOVE_LEFT:
-      return state;
-    case MOVE_DOWN:
-      return state;
-    case RESUME:
-      return state;
-    case PAUSE:
-      return state;
-    case GAME_OVER:
-      return state;
-    case RESTART:
-      return state;
-    default:
-      return state;
-  }
+      const newRotation = nextRotation(shape, rotation)
+      if (canMoveTo(shape, grid, x, y, newRotation)) {
+          return { ...state, rotation: newRotation }
+      }
+      return state
 };
+}
 
 export default gameReducer;
